@@ -189,7 +189,9 @@ func (p *printer) printStruct() {
 			value := p.value.Field(i)
 			skip, ok := skipFields[name]
 			if !(skip && ok) {
-				if !(skipEmptyFields && !value.IsValid()) && !(skipEmptyStringFields && value.String() == "") {
+
+				if !(skipEmptyFields && value.Kind() == reflect.Ptr && value.IsNil()) &&
+					!(skipEmptyStringFields && value.String() == "") {
 					field := colorize(name, currentScheme.FieldName)
 					p.indentPrintf("%s:\t%s,\n", field, p.format(value))
 				}
