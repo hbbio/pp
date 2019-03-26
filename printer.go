@@ -15,7 +15,11 @@ const (
 	indentWidth = 2
 )
 
-var skipFields = make(map[string]bool)
+var (
+	skipFields            = make(map[string]bool)
+	skipEmptyFields       = false
+	skipEmptyStringFields = false
+)
 
 var (
 	// BufferFoldThreshold sets the limit to be shortened as {...}
@@ -182,11 +186,13 @@ func (p *printer) printStruct() {
 	p.indented(func() {
 		for i := 0; i < p.value.NumField(); i++ {
 			name := p.value.Type().Field(i).Name
+			value := p.value.Field(i)
 			skip, ok := skipFields[name]
 			if !(skip && ok) {
-				field := colorize(name, currentScheme.FieldName)
-				value := p.value.Field(i)
-				p.indentPrintf("%s:\t%s,\n", field, p.format(value))
+				if !(skipEmptyFields && !value.IsValid()) && !(skipEmptyStringFields && value.String() == "") {
+					field := colorize(name, currentScheme.FieldName)
+					p.indentPrintf("%s:\t%s,\n", field, p.format(value))
+				}
 			}
 		}
 	})
