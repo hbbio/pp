@@ -22,12 +22,6 @@ var (
 	BufferFoldThreshold = 1024
 )
 
-// SkipField adds a field to skip from printing
-// Implementation relies on a global variable and applies to all .Print calls
-func SkipField(name string) {
-	skipFields[name] = true
-}
-
 func format(object interface{}) string {
 	return newPrinter(object).String()
 }

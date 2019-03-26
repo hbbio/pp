@@ -133,6 +133,12 @@ func ResetColorScheme() {
 	currentScheme = defaultScheme
 }
 
+// SkipField adds a field to skip from printing
+// Implementation relies on a global variable and applies to all subsequent print calls
+func SkipField(name string) {
+	skipFields[name] = true
+}
+
 func formatAll(objects []interface{}) []interface{} {
 	results := []interface{}{}
 
