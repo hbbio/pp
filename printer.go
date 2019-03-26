@@ -16,8 +16,7 @@ const (
 )
 
 var (
-	// If the length of array or slice is larger than this,
-	// the buffer will be shorten as {...}.
+	// BufferFoldThreshold sets the limit to be shortened as {...}
 	BufferFoldThreshold = 1024
 )
 

@@ -69,7 +69,7 @@ type Circular struct {
 	C *Circular
 }
 
-var c Circular = Circular{}
+var c = Circular{}
 
 func init() {
 	c.C = &c

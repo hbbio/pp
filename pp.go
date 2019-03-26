@@ -96,7 +96,7 @@ func Fatalln(a ...interface{}) {
 	os.Exit(1)
 }
 
-// Change Print* functions' output to a given writer.
+// SetDefaultOutput changes Print* functions' output to a given writer.
 // For example, you can limit output by ENV.
 //
 //	func init() {
@@ -115,7 +115,7 @@ func GetDefaultOutput() io.Writer {
 	return out
 }
 
-// Change Print* functions' output to default one.
+// ResetDefaultOutput changes Print* functions' output to default one.
 func ResetDefaultOutput() {
 	outLock.Lock()
 	out = defaultOut

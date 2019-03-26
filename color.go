@@ -6,20 +6,28 @@ import (
 )
 
 const (
-	// No color
+	// NoColor has no color
 	NoColor uint16 = 1 << 15
 )
 
 const (
 	// Foreground colors for ColorScheme.
 	_ uint16 = iota | NoColor
+	// Black color
 	Black
+	// Red color
 	Red
+	// Green color
 	Green
+	// Yellow color
 	Yellow
+	// Blue color
 	Blue
+	// Magenta color
 	Magenta
+	// Cyan color
 	Cyan
+	// White color
 	White
 	bitsForeground       = 0
 	maskForegorund       = 0xf
@@ -29,13 +37,21 @@ const (
 const (
 	// Background colors for ColorScheme.
 	_ uint16 = iota<<bitsBackground | NoColor
+	// BackgroundBlack color
 	BackgroundBlack
+	// BackgroundRed color
 	BackgroundRed
+	// BackgroundGreen color
 	BackgroundGreen
+	// BackgroundYellow color
 	BackgroundYellow
+	// BackgroundBlue color
 	BackgroundBlue
+	// BackgroundMagenta color
 	BackgroundMagenta
+	// BackgroundCyan color
 	BackgroundCyan
+	// BackgroundWhite color
 	BackgroundWhite
 	bitsBackground       = 4
 	maskBackground       = 0xf << bitsBackground
@@ -50,7 +66,7 @@ const (
 	ansiBold        = 1
 )
 
-// To use with SetColorScheme.
+// ColorScheme is used with SetColorScheme.
 type ColorScheme struct {
 	Bool            uint16
 	Integer         uint16
@@ -67,8 +83,7 @@ type ColorScheme struct {
 }
 
 var (
-	// If you set false to this variable, you can use pretty formatter
-	// without coloring.
+	// ColoringEnabled can enable/disable coloring
 	ColoringEnabled = true
 
 	defaultScheme = ColorScheme{
