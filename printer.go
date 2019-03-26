@@ -15,10 +15,18 @@ const (
 	indentWidth = 2
 )
 
+var skipFields = make(map[string]bool)
+
 var (
 	// BufferFoldThreshold sets the limit to be shortened as {...}
 	BufferFoldThreshold = 1024
 )
+
+// SkipField adds a field to skip from printing
+// Implementation relies on a global variable and applies to all .Print calls
+func SkipField(name string) {
+	skipFields[name] = true
+}
 
 func format(object interface{}) string {
 	return newPrinter(object).String()
@@ -179,9 +187,13 @@ func (p *printer) printStruct() {
 	p.println(p.typeString() + "{")
 	p.indented(func() {
 		for i := 0; i < p.value.NumField(); i++ {
-			field := colorize(p.value.Type().Field(i).Name, currentScheme.FieldName)
-			value := p.value.Field(i)
-			p.indentPrintf("%s:\t%s,\n", field, p.format(value))
+			name := p.value.Type().Field(i).Name
+			skip, ok := skipFields[name]
+			if !(skip && ok) {
+				field := colorize(name, currentScheme.FieldName)
+				value := p.value.Field(i)
+				p.indentPrintf("%s:\t%s,\n", field, p.format(value))
+			}
 		}
 	})
 	p.indentPrint("}")
